@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandip Nandi — Designer · Analyst · Product Lead</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* ── Palette from image ── */
+  --lavender:   #d4c4cc;   /* swatch 1 — dusty lavender  */
+  --blush:      #e8c4b4;   /* swatch 2 — blush peach     */
+  --cranberry:  #8b3048;   /* swatch 3 — deep cranberry  */
+  --dusty-rose: #b06878;   /* swatch 4 — dusty rose      */
+  --sage:       #a8bcb0;   /* swatch 5 — sage mist       */
+  --forest:     #3d6b52;   /* swatch 6 — deep forest     */
+
+  /* ── Base ── */
+  --ink:        #1c1018;   /* very dark cranberry-tinted ink */
+  --off-white:  #faf6f4;
+  --warm-mid:   #ede4e0;
+  --muted:      #7a6872;
+
+  /* ── Discipline accents ── */
+  --da:         var(--cranberry);   /* Data — cranberry */
+  --da-lt:      #f2dde2;
+  --pd:         var(--dusty-rose);  /* Design — dusty rose */
+  --pd-lt:      #f5e8ec;
+  --pm:         var(--forest);      /* PM — forest */
+  --pm-lt:      #dceae3;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{background:var(--ink);color:var(--off-white);font-family:"Outfit",system-ui,sans-serif;font-weight:400;overflow-x:hidden;cursor:none;}
+
+#cur{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--blush);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s cubic-bezier(.34,1.56,.64,1),height .3s,background .25s;mix-blend-mode:normal;opacity:.9;}
+#cur.big{width:52px;height:52px;opacity:.5;}
+#prog{position:fixed;top:0;left:0;height:2px;background:var(--dusty-rose);z-index:9998;width:0;transition:width .1s;}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 64px 72px;position:relative;overflow:hidden;background:linear-gradient(160deg,#2a1620 0%,var(--ink) 60%);}
+.hero::before{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+.hero-bg-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(212,196,204,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(212,196,204,.04) 1px,transparent 1px);background-size:80px 80px;animation:gridDrift 40s linear infinite;}
+@keyframes gridDrift{from{background-position:0 0}to{background-position:80px 80px}}
+
+/* palette swatch row — decorative */
+.hero-palette{position:absolute;top:52px;left:64px;display:flex;gap:6px;z-index:1;opacity:0;animation:fadeUp .8s ease 1.2s forwards;}
+.hp{width:14px;height:14px;border-radius:50%;}
+
+.hero-number{position:absolute;top:56px;right:64px;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.2em;color:rgba(232,196,180,.2);z-index:1;opacity:0;animation:fadeUp .8s ease 1.2s forwards;}
+.hero-eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);margin-bottom:32px;z-index:1;position:relative;opacity:0;animation:fadeUp .8s ease .1s forwards;display:flex;align-items:center;gap:16px;}
+.hero-eyebrow::before{content:"";width:36px;height:1px;background:var(--dusty-rose);}
+
+.hero-name{font-family:"Playfair Display",Georgia,serif;font-size:clamp(72px,11vw,160px);font-weight:900;line-height:.88;letter-spacing:-.04em;z-index:1;position:relative;margin-bottom:56px;}
+.hero-name .n1{display:block;color:var(--off-white);opacity:0;animation:fadeUp 1s ease .2s forwards;}
+.hero-name .n2{display:block;color:var(--lavender);font-style:italic;opacity:0;animation:fadeUp 1s ease .38s forwards;}
+
+.hero-tagline{font-size:clamp(15px,1.6vw,18px);line-height:1.8;color:rgba(232,196,180,.55);max-width:500px;z-index:1;position:relative;margin-bottom:64px;opacity:0;animation:fadeUp .9s ease .55s forwards;}
+.hero-tagline strong{color:var(--blush);font-weight:400;}
+
+/* ── DISCIPLINE CARDS ── */
+.disciplines{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;z-index:1;position:relative;opacity:0;animation:fadeUp .9s ease .75s forwards;}
+.disc{position:relative;padding:32px 28px 36px;text-decoration:none;overflow:hidden;border:1px solid rgba(212,196,204,.1);transition:border-color .35s,background .35s;display:block;background:rgba(255,255,255,.02);}
+.disc:hover{border-color:rgba(212,196,204,.25);background:rgba(255,255,255,.04);}
+.disc-num{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.18em;color:rgba(232,196,180,.2);margin-bottom:20px;display:block;}
+.disc-icon{font-size:26px;margin-bottom:16px;display:block;}
+.disc-title{font-family:"Playfair Display",serif;font-size:22px;font-weight:700;line-height:1.1;margin-bottom:10px;letter-spacing:-.02em;}
+.disc-sub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);margin-bottom:14px;opacity:.7;}
+.disc-desc{font-size:13px;color:rgba(232,196,180,.45);line-height:1.7;margin-bottom:24px;}
+.disc-cta{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;transition:gap .25s;}
+.disc:hover .disc-cta{gap:14px;}
+.disc-bar{position:absolute;bottom:0;left:0;right:0;height:3px;transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.16,1,.3,1);}
+.disc:hover .disc-bar{transform:scaleX(1);}
+
+.disc-da .disc-title,.disc-da .disc-cta{color:var(--blush);}
+.disc-da .disc-bar{background:var(--cranberry);}
+.disc-da:hover{border-color:rgba(139,48,72,.35)!important;}
+
+.disc-pd .disc-title,.disc-pd .disc-cta{color:var(--lavender);}
+.disc-pd .disc-bar{background:var(--dusty-rose);}
+.disc-pd:hover{border-color:rgba(176,104,120,.35)!important;}
+
+.disc-pm .disc-title,.disc-pm .disc-cta{color:var(--sage);}
+.disc-pm .disc-bar{background:var(--forest);}
+.disc-pm:hover{border-color:rgba(61,107,82,.35)!important;}
+
+.hero-scroll{position:absolute;bottom:36px;right:64px;z-index:1;display:flex;align-items:center;gap:10px;font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(168,188,176,.25);opacity:0;animation:fadeUp .8s ease 1.4s forwards;}
+
+/* ── BIO STRIP ── */
+.bio-strip{background:var(--off-white);color:var(--ink);padding:96px 64px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.bio-tag{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
+.bio-headline{font-family:"Playfair Display",serif;font-size:clamp(36px,4vw,52px);font-weight:700;letter-spacing:-.03em;margin-bottom:28px;color:var(--ink);}
+.bio-headline .line{display:block;line-height:1.28;}
+.bio-headline .line+.line{margin-top:6px;}
+.bio-headline em{font-style:italic;color:var(--dusty-rose);}
+.bio-p{font-size:15px;line-height:1.9;color:#4a3d42;}
+.bio-p+.bio-p{margin-top:16px;}
+.bio-right{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.bio-stat{padding:28px 24px;}
+.bio-stat-n{font-family:"Playfair Display",serif;font-size:42px;font-weight:700;font-style:italic;line-height:1;}
+.bio-stat-l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:8px;}
+.bio-s1{background:var(--da-lt);}.bio-s1 .bio-stat-n{color:var(--cranberry);}
+.bio-s2{background:var(--pd-lt);}.bio-s2 .bio-stat-n{color:var(--dusty-rose);}
+.bio-s3{background:var(--pm-lt);}.bio-s3 .bio-stat-n{color:var(--forest);}
+.bio-s4{background:var(--lavender);}.bio-s4 .bio-stat-n{color:var(--ink);}
+
+footer{background:var(--ink);border-top:1px solid rgba(212,196,204,.08);padding:24px 64px;display:flex;justify-content:space-between;align-items:center;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.12em;color:rgba(168,188,176,.3);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){
+  .hero{padding:0 24px 56px;}.hero-number,.hero-scroll{right:24px;}.hero-palette{left:24px;}
+  .disciplines{grid-template-columns:1fr;}
+  .bio-strip{grid-template-columns:1fr;gap:48px;padding:64px 24px;}
+  .bio-right{grid-template-columns:1fr 1fr;}
+  footer{padding:20px 24px;flex-direction:column;gap:8px;text-align:center;}
+}
+@media(max-width:480px){.hero-name{font-size:58px;}.bio-right{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="cur"></div>
+
+<section class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-palette">
+    <div class="hp" style="background:#d4c4cc"></div>
+    <div class="hp" style="background:#e8c4b4"></div>
+    <div class="hp" style="background:#8b3048"></div>
+    <div class="hp" style="background:#b06878"></div>
+    <div class="hp" style="background:#a8bcb0"></div>
+    <div class="hp" style="background:#3d6b52"></div>
+  </div>
+  <div class="hero-number">SN · 2025</div>
+  <div class="hero-eyebrow">Portfolio · Three Disciplines</div>
+  <h1 class="hero-name">
+    <span class="n1">Sandip</span>
+    <span class="n2">Nandi.</span>
+  </h1>
+  <p class="hero-tagline">
+    I grew up drawing things —<br>
+    <strong>now I turn data into stories, interfaces into experiences, and ideas into products.</strong>
+  </p>
+  <div class="disciplines">
+    <div class="disc disc-da">
+      <span class="disc-num">01 / 03</span>
+      <span class="disc-icon">📊</span>
+      <div class="disc-title">Data Analysis</div>
+      <div class="disc-sub">Power BI · Tableau · SQL</div>
+      <p class="disc-desc">Dashboards and visualisations that turn raw numbers into decisions people can act on.</p>
+      <span class="disc-cta">Data Analysis ·</span>
+      <div class="disc-bar"></div>
+    </div>
+    <div class="disc disc-pd">
+      <span class="disc-num">02 / 03</span>
+      <span class="disc-icon">✏️</span>
+      <div class="disc-title">Product Design</div>
+      <div class="disc-sub">Figma · UX · Design Systems</div>
+      <p class="disc-desc">End-to-end design work — from zero-to-one UX flows to design systems at scale.</p>
+      <span class="disc-cta">Product Design ·</span>
+      <div class="disc-bar"></div>
+    </div>
+    <div class="disc disc-pm">
+      <span class="disc-num">03 / 03</span>
+      <span class="disc-icon">🗺</span>
+      <div class="disc-title">Product Management</div>
+      <div class="disc-sub">Strategy · Roadmaps · GTM</div>
+      <p class="disc-desc">Strategy and execution — roadmapping, persona research, monetisation, go-to-market.</p>
+      <span class="disc-cta">Product Management ·</span>
+      <div class="disc-bar"></div>
+    </div>
+  </div>
+  <div class="hero-scroll">↓ scroll</div>
+</section>
+
+<section class="bio-strip">
+  <div>
+    <div class="bio-tag">About</div>
+    <h2 class="bio-headline">
+      <span class="line">I grew up</span>
+      <span class="line">drawing things.</span>
+      <span class="line"><em>Now I design them.</em></span>
+    </h2>
+    <p class="bio-p">A designer, analyst and product thinker with roots in Asia, an MBA from <strong>Carnegie Mellon</strong>, and experience across five continents. I bridge the gap between data, design and business strategy — fluent in all three, siloed in none.</p>
+    <p class="bio-p">I've built products used by <strong>100M+ people</strong>, consulted for startups in South America, and designed systems across luxury e-commerce, fintech, and SaaS.</p>
+  </div>
+  <div class="bio-right">
+    <div class="bio-stat bio-s1"><div class="bio-stat-n">4+</div><div class="bio-stat-l">Years experience</div></div>
+    <div class="bio-stat bio-s2"><div class="bio-stat-n">100M+</div><div class="bio-stat-l">Users impacted</div></div>
+    <div class="bio-stat bio-s3"><div class="bio-stat-n">3</div><div class="bio-stat-l">Disciplines</div></div>
+    <div class="bio-stat bio-s4"><div class="bio-stat-n">5</div><div class="bio-stat-l">Continents visited</div></div>
+  </div>
+</section>
+
+<footer>
+  <span>Sandip Nandi · Designer · Analyst · Product Lead</span>
+  <span>CMU MBA · 5 Continents · 2025</span>
+</footer>
+
+<script>
+const cur=document.getElementById("cur");
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){cx+=(mx-cx)*.15;cy+=(my-cy)*.15;cur.style.left=cx+"px";cur.style.top=cy+"px";requestAnimationFrame(loop);})();
+document.addEventListener("mousedown",()=>cur.style.transform="translate(-50%,-50%) scale(.6)");
+document.addEventListener("mouseup",()=>cur.style.transform="translate(-50%,-50%) scale(1)");
+document.querySelectorAll("a,.disc").forEach(el=>{
+  el.addEventListener("mouseenter",()=>cur.classList.add("big"));
+  el.addEventListener("mouseleave",()=>cur.classList.remove("big"));
+});
+const prog=document.getElementById("prog");
+window.addEventListener("scroll",()=>{const d=document.documentElement;prog.style.width=((d.scrollTop/(d.scrollHeight-d.clientHeight))*100)+"%";},{passive:true});
+</script>
+</body>
+</html>
