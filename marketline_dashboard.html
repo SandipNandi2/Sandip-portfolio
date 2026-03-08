@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarketLine · Global Industry Intelligence 2020–2029</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Syne:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --ink: #0d0f14;
+  --paper: #f5f0e8;
+  --paper2: #ede8dc;
+  --cream: #faf7f0;
+  --gold: #c9a84c;
+  --gold-light: #e8cc7a;
+  --rust: #b85c38;
+  --teal: #2a7d6b;
+  --slate: #3d5a73;
+  --charcoal: #2c3240;
+  --muted: #7a7464;
+  --border: #d4cebf;
+  --shadow: rgba(13,15,20,0.12);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  font-family: 'Syne', sans-serif;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 72px;
+  overflow: hidden;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.orb1 { width:500px; height:500px; background: rgba(201,168,76,0.08); top:-100px; right:-100px; }
+.orb2 { width:300px; height:300px; background: rgba(42,125,107,0.06); bottom:50px; left:200px; }
+
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s ease forwards;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(52px, 7vw, 96px);
+  line-height: 1.0;
+  color: var(--paper);
+  max-width: 800px;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s ease forwards;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-desc {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 60px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s ease forwards;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s ease forwards;
+}
+
+.hero-stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  color: var(--paper);
+  line-height: 1;
+}
+
+.hero-stat-val span { color: var(--gold); font-style: italic; }
+
+.hero-stat-label {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 48px;
+  left: 72px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeUp 1s 1.2s ease forwards;
+}
+
+.scroll-line {
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  animation: expandLine 1.5s 1.5s ease forwards;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* ── SECTIONS ── */
+.section {
+  background: var(--cream);
+  padding: 96px 72px;
+  position: relative;
+}
+
+.section.dark {
+  background: var(--charcoal);
+}
+
+.section.paper {
+  background: var(--paper);
+}
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.section-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.15;
+  color: var(--charcoal);
+  margin-bottom: 16px;
+}
+
+.section.dark .section-headline { color: var(--paper); }
+
+.section-sub {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 56px;
+}
+
+.section.dark .section-sub { color: #9aa4b2; }
+
+/* ── CHART CARDS ── */
+.chart-card {
+  background: white;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 2px 24px var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--teal));
+}
+
+.chart-card.dark-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 2px 32px rgba(0,0,0,0.3);
+}
+
+.chart-card.dark-card::before {
+  background: linear-gradient(90deg, var(--gold), var(--rust));
+}
+
+.chart-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--charcoal);
+  margin-bottom: 4px;
+}
+
+.dark-card .chart-title { color: var(--paper); }
+
+.chart-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+/* ── LAYOUT GRIDS ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+.grid-60-40 { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; }
+.grid-40-60 { display: grid; grid-template-columns: 1fr 1.5fr; gap: 24px; }
+
+/* ── NARRATIVE CALLOUT ── */
+.callout {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  border-radius: 12px;
+  padding: 36px 40px;
+  margin-bottom: 24px;
+}
+
+.callout-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 64px;
+  font-style: italic;
+  color: rgba(13,15,20,0.15);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.callout-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.callout-sub {
+  font-size: 13px;
+  color: rgba(13,15,20,0.6);
+  margin-top: 12px;
+}
+
+/* ── WINNER LOSERS ── */
+.insight-row {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.insight-badge {
+  width: 48px;
+  min-width: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.insight-badge.win { background: rgba(42,125,107,0.12); }
+.insight-badge.lose { background: rgba(184,92,56,0.12); }
+
+.insight-body {
+  flex: 1;
+  background: var(--cream);
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+
+.dark-card .insight-body {
+  background: rgba(255,255,255,0.05);
+}
+
+.insight-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-bottom: 4px;
+}
+
+.dark-card .insight-name { color: var(--paper); }
+
+.insight-detail {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.insight-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-style: italic;
+  min-width: 70px;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.insight-val.pos { color: var(--teal); }
+.insight-val.neg { color: var(--rust); }
+
+/* ── BUBBLE LEGEND ── */
+.bubble-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.b-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.b-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── TABLE (compact) ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.data-table thead th {
+  text-align: left;
+  padding: 10px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.dark-card .data-table thead th {
+  border-color: rgba(255,255,255,0.1);
+  color: #5a6880;
+}
+
+.data-table tbody tr {
+  border-bottom: 1px solid rgba(212,206,191,0.4);
+  transition: background 0.15s;
+}
+
+.dark-card .data-table tbody tr {
+  border-color: rgba(255,255,255,0.05);
+}
+
+.data-table tbody tr:hover { background: rgba(201,168,76,0.06); }
+
+.data-table tbody td {
+  padding: 11px 12px;
+  color: var(--charcoal);
+  vertical-align: middle;
+}
+
+.dark-card .data-table tbody td { color: #c8d4e0; }
+
+.rank-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.ind-color-bar {
+  display: inline-block;
+  width: 3px; height: 14px;
+  border-radius: 2px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.pill-up { background: rgba(42,125,107,0.12); color: var(--teal); }
+.pill-dn { background: rgba(184,92,56,0.12); color: var(--rust); }
+.pill-neutral { background: rgba(122,116,100,0.12); color: var(--muted); }
+.pill-high { background: rgba(201,168,76,0.15); color: #8a6820; }
+
+.mini-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.mini-bar { height: 4px; border-radius: 2px; flex-shrink: 0; }
+
+/* ── SELECTOR TABS ── */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  background: var(--paper2);
+  padding: 4px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.tab {
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--muted);
+  border: none;
+  background: transparent;
+  font-family: 'Syne', sans-serif;
+}
+
+.tab.active {
+  background: white;
+  color: var(--charcoal);
+  box-shadow: 0 1px 8px var(--shadow);
+}
+
+/* ── STORY STRIP ── */
+.story-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.story-cell {
+  padding: 28px 24px;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+
+.story-cell:last-child { border-right: none; }
+
+.story-cell-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.story-cell-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--charcoal);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.story-cell-body {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── SECTION DIVIDER ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 56px 0;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(24px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+@keyframes expandLine {
+  to { transform: scaleX(1); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--ink);
+  padding: 32px 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(201,168,76,0.15);
+}
+
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--paper);
+}
+
+.footer-logo span { color: var(--gold); font-style: italic; }
+
+.footer-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #3a4050;
+  letter-spacing: 1px;
+}
+
+/* ── CANVAS CONTAINERS ── */
+.chart-container {
+  position: relative;
+}
+
+canvas { max-width: 100%; }
+
+/* chart height helpers */
+.h-280 { height: 280px; }
+.h-320 { height: 320px; }
+.h-360 { height: 360px; }
+.h-420 { height: 420px; }
+.h-480 { height: 480px; }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+
+  <div class="hero-eyebrow">MarketLine Intelligence · Global Industry Report · 2020–2029</div>
+  <h1 class="hero-title">The World's Industries<br>Are <em>Reshaping</em><br>Right Now.</h1>
+  <p class="hero-desc">
+    A decade of disruption across 24 global industries — from the post-pandemic rebound to the next wave of growth. Here is the story the numbers tell.
+  </p>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-val"><span>$471</span>B</div>
+      <div class="hero-stat-label">Total 2024 Market Value</div>
+    </div>
+    <div>
+      <div class="hero-stat-val"><span>24</span></div>
+      <div class="hero-stat-label">Global Industries</div>
+    </div>
+    <div>
+      <div class="hero-stat-val"><span>10</span>yr</div>
+      <div class="hero-stat-label">Forecast Horizon</div>
+    </div>
+    <div>
+      <div class="hero-stat-val"><span>8.0%</span></div>
+      <div class="hero-stat-label">Fastest Fwd CAGR</div>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- ══ SECTION 1: THE BIG PICTURE ══ -->
+<section class="section paper reveal" id="s1">
+  <div class="section-num">01 / The Big Picture</div>
+  <h2 class="section-headline">Who Commands<br>the Global Economy?</h2>
+  <p class="section-sub">Banking & Payments alone accounts for 64% of all tracked market value. Beneath that giant, a rich ecosystem of industries competes for the remaining 36%.</p>
+
+  <div class="story-strip reveal">
+    <div class="story-cell">
+      <div class="story-cell-num">Finding 01</div>
+      <div class="story-cell-title">One industry dominates</div>
+      <div class="story-cell-body">Banking & Payments ($299B) dwarfs every other sector — more than 8× the size of the second-largest industry.</div>
+    </div>
+    <div class="story-cell">
+      <div class="story-cell-num">Finding 02</div>
+      <div class="story-cell-title">Six sectors form the core</div>
+      <div class="story-cell-body">Government, Retail, Construction, Consumer, Healthcare and Transport collectively represent 26% of tracked value.</div>
+    </div>
+    <div class="story-cell">
+      <div class="story-cell-num">Finding 03</div>
+      <div class="story-cell-title">Long tail of specialisation</div>
+      <div class="story-cell-body">12 industries each hold less than 2% share individually, yet these are often the fastest-moving and highest-growth markets.</div>
+    </div>
+  </div>
+
+  <div class="grid-60-40">
+    <div class="chart-card reveal">
+      <div class="chart-title">Market Value by Industry, 2024</div>
+      <div class="chart-caption">USD Billions · Circle area proportional to market size</div>
+      <div class="chart-container h-420">
+        <canvas id="bubbleChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-card reveal">
+      <div class="chart-title">Market Share Distribution</div>
+      <div class="chart-caption">Banking excluded to show rest-of-world composition</div>
+      <div class="chart-container h-420">
+        <canvas id="donutChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 2: PANDEMIC & RECOVERY ══ -->
+<section class="section dark reveal" id="s2">
+  <div class="section-num" style="color:var(--gold)">02 / Pandemic Shock & Recovery</div>
+  <h2 class="section-headline">The Great Disruption<br>of 2020–2024</h2>
+  <p class="section-sub">Covid-19 rewrote industry trajectories. Some sectors collapsed and rebounded spectacularly. Others barely felt the shock.</p>
+
+  <div class="grid-2" style="margin-bottom:24px">
+    <div class="chart-card dark-card reveal">
+      <div class="chart-title">Recovery Champions · CAGR 2020–24</div>
+      <div class="chart-caption">Highest historical growth rates — largely pandemic rebound</div>
+      <div class="insight-row">
+        <div class="insight-badge win">✈</div>
+        <div class="insight-body">
+          <div class="insight-name">Travel & Tourism</div>
+          <div class="insight-detail">Collapsed in 2020, surged post-lockdown</div>
+        </div>
+        <div class="insight-val pos">+26.2%</div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-badge win">⛏</div>
+        <div class="insight-body">
+          <div class="insight-name">Mining</div>
+          <div class="insight-detail">Commodity supercycle & energy demand</div>
+        </div>
+        <div class="insight-val pos">+8.5%</div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-badge win">🧪</div>
+        <div class="insight-body">
+          <div class="insight-name">Chemicals</div>
+          <div class="insight-detail">Supply chain repricing & industrial demand</div>
+        </div>
+        <div class="insight-val pos">+7.0%</div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-badge win">🎭</div>
+        <div class="insight-body">
+          <div class="insight-name">Leisure & Arts</div>
+          <div class="insight-detail">Entertainment rebound post-restrictions</div>
+        </div>
+        <div class="insight-val pos">+7.4%</div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-badge win">💻</div>
+        <div class="insight-body">
+          <div class="insight-name">Technology, Media & Telecom</div>
+          <div class="insight-detail">Digital acceleration across all sectors</div>
+        </div>
+        <div class="insight-val pos">+6.4%</div>
+      </div>
+    </div>
+
+    <div class="chart-card dark-card reveal">
+      <div class="chart-title">Slow Movers · CAGR 2020–24</div>
+      <div class="chart-caption">Structural stagnation or transition headwinds</div>
+      <div class="insight-row">
+        <div class="insight-badge lose">🌾</div>
+        <div class="insight-body">
+          <div class="insight-name">Agricultural & Forest Products</div>
+          <div class="insight-detail">Commodity pricing caps value growth</div>
+        </div>
+        <div class="insight-val neg">+0.7%</div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-badge lose">🏦</div>
+        <div class="insight-body">
+          <div class="insight-name">Banking & Payments</div>
+          <div class="insight-detail">Rate environment volatility 2022–24</div>
+        </div>
+        <div class="insight-val neg">+0.5%</div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-badge lose">🏠</div>
+        <div class="insight-body">
+          <div class="insight-name">Real Estate</div>
+          <div class="insight-detail">Rising rates compressed valuations</div>
+        </div>
+        <div class="insight-val neg">+1.6%</div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-badge lose">💊</div>
+        <div class="insight-body">
+          <div class="insight-name">Medical Devices</div>
+          <div class="insight-detail">Post-pandemic elective procedure slowdown</div>
+        </div>
+        <div class="insight-val neg">+1.7%</div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-badge lose">⚡</div>
+        <div class="insight-body">
+          <div class="insight-name">Power & Utilities</div>
+          <div class="insight-detail">Regulatory pricing constraints</div>
+        </div>
+        <div class="insight-val neg">+1.8%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card dark-card reveal">
+    <div class="chart-title">Index of Market Value Growth · 2020 = 100</div>
+    <div class="chart-caption">Showing 8 selected industries · Historical 2020–2024 · Forecast 2025–2029</div>
+    <div class="tabs" id="linetabs">
+      <button class="tab active" onclick="switchLine('growth')">High-Growth</button>
+      <button class="tab" onclick="switchLine('stable')">Stable Giants</button>
+      <button class="tab" onclick="switchLine('recovery')">Recovery Stories</button>
+    </div>
+    <div class="chart-container h-360">
+      <canvas id="lineChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 3: GROWTH MATRIX ══ -->
+<section class="section paper reveal" id="s3">
+  <div class="section-num">03 / Growth Matrix</div>
+  <h2 class="section-headline">Where to Watch:<br>The Next Five Years</h2>
+  <p class="section-sub">Plotting historical momentum against forward outlook reveals four strategic quadrants — from consistent compounders to turnaround plays.</p>
+
+  <div class="grid-60-40">
+    <div class="chart-card reveal">
+      <div class="chart-title">Growth Matrix · CAGR 2020–24 vs CAGR 2025–29</div>
+      <div class="chart-caption">Bubble size = 2024 Market Value (USD B) · Dashed lines = 4% thresholds</div>
+      <div class="chart-container h-480">
+        <canvas id="scatterChart"></canvas>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div class="callout reveal">
+        <div class="callout-num">I</div>
+        <div class="callout-text">Technology accelerates while others decelerate</div>
+        <div class="callout-sub">TMT is the only major industry with both high historical AND high forecast CAGR (6.4% → 8.0%)</div>
+      </div>
+      <div class="chart-card reveal" style="flex:1">
+        <div class="chart-title">CAGR Shift · Then vs Next</div>
+        <div class="chart-caption">Change in growth momentum (fwd minus hist)</div>
+        <div class="chart-container h-280">
+          <canvas id="deltaChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 4: DEEP DIVE TIMELINES ══ -->
+<section class="section dark reveal" id="s4">
+  <div class="section-num" style="color:var(--gold)">04 / Industry Deep Dives</div>
+  <h2 class="section-headline">Follow the Money<br>Through the Decade</h2>
+  <p class="section-sub">Select any industry to see its full value trajectory from 2020 to 2029, with historical data and MarketLine forecasts.</p>
+
+  <div class="chart-card dark-card reveal">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
+      <div>
+        <div class="chart-title">Industry Value Timeline · 2020–2029</div>
+        <div class="chart-caption">USD Billions · Shaded area = Forecast period (2025–2029)</div>
+      </div>
+      <select id="industrySelect" onchange="updateAreaChart()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--paper);padding:10px 16px;border-radius:6px;font-family:'Syne',sans-serif;font-size:13px;cursor:pointer;outline:none;">
+      </select>
+    </div>
+    <div class="chart-container h-360">
+      <canvas id="areaChart"></canvas>
+    </div>
+    <div id="areaInsights" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px;"></div>
+  </div>
+</section>
+
+<!-- ══ SECTION 5: RANKINGS TABLE ══ -->
+<section class="section paper reveal" id="s5">
+  <div class="section-num">05 / Full Rankings</div>
+  <h2 class="section-headline">Every Industry,<br>Every Metric</h2>
+  <p class="section-sub">Complete comparative data across all 24 industries, sortable by any dimension.</p>
+
+  <div class="chart-card reveal">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+      <input id="searchBox" placeholder="Search industry…" oninput="renderTable()" style="background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:9px 14px;font-family:'Syne',sans-serif;font-size:12px;color:var(--charcoal);outline:none;width:220px;">
+      <div class="tabs" style="margin-bottom:0">
+        <button class="tab active" id="sortBtnVal" onclick="tableSort('val')">Market Size ↓</button>
+        <button class="tab" id="sortBtnC1" onclick="tableSort('c1')">CAGR 20–24</button>
+        <button class="tab" id="sortBtnC2" onclick="tableSort('c2')">CAGR 25–29</button>
+        <button class="tab" id="sortBtnName" onclick="tableSort('name')">A–Z</button>
+      </div>
+    </div>
+    <table class="data-table" id="mainTable">
+      <thead>
+        <tr>
+          <th style="width:36px;text-align:center">#</th>
+          <th>Industry</th>
+          <th style="text-align:right">2020 Value</th>
+          <th style="text-align:right">2024 Value</th>
+          <th style="text-align:right">2029 Forecast</th>
+          <th style="text-align:right">CAGR 20–24</th>
+          <th style="text-align:right">CAGR 25–29</th>
+          <th style="min-width:100px">Momentum</th>
+          <th style="text-align:center">Outlook</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">Market<span>Line</span> Intelligence</div>
+  <div class="footer-note">GLOBAL INDUSTRY DATABOOK 2020–2029 · USD BILLIONS · FOR PORTFOLIO USE</div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════ */
+const DATA = [
+  {n:"Banking & Payments",       v24:299.43, v20:291.4, v29:174.5, c1:0.0055, c2:0.0316, t:[291.4,314.1,335.2,350.4,299.4,149.4,154.4,160.6,166.7,174.5]},
+  {n:"Government & Non-profit",  v24:35.62,  v20:31.2,  v29:44.5,  c1:0.0270, c2:0.0363, t:[31.2,33.3,32.4,34.5,35.6,37.2,39.0,40.7,42.6,44.5]},
+  {n:"Retail",                   v24:21.69,  v20:17.8,  v29:26.3,  c1:0.0399, c2:0.0302, t:[17.8,20.2,20.3,21.0,21.7,22.6,23.6,24.5,25.4,26.3]},
+  {n:"Construction",             v24:15.89,  v20:12.4,  v29:20.7,  c1:0.0501, c2:0.0448, t:[12.4,14.3,14.9,15.4,15.9,16.6,17.5,18.5,19.6,20.7]},
+  {n:"Consumer",                 v24:13.74,  v20:12.1,  v29:17.1,  c1:0.0252, c2:0.0387, t:[12.1,13.2,13.3,13.6,13.7,14.1,14.7,15.4,16.2,17.1]},
+  {n:"Healthcare",               v24:11.59,  v20:9.6,   v29:14.4,  c1:0.0391, c2:0.0357, t:[9.6,10.4,10.5,11.1,11.6,12.0,12.5,13.1,13.7,14.4]},
+  {n:"Transport & Logistics",    v24:11.00,  v20:10.0,  v29:13.4,  c1:0.0200, c2:0.0348, t:[10.0,10.8,11.4,10.7,11.0,11.3,11.7,12.2,12.7,13.4]},
+  {n:"Power & Utilities",        v24:9.92,   v20:9.1,   v29:12.0,  c1:0.0180, c2:0.0318, t:[9.1,9.6,9.7,9.6,9.9,10.3,10.7,11.1,11.6,12.0]},
+  {n:"Industrial Goods",         v24:9.23,   v20:7.6,   v29:12.0,  c1:0.0392, c2:0.0465, t:[7.6,8.5,8.8,9.0,9.2,9.6,10.0,10.6,11.2,12.0]},
+  {n:"Real Estate",              v24:8.99,   v20:8.3,   v29:11.4,  c1:0.0160, c2:0.0401, t:[8.3,8.7,8.1,8.5,9.0,9.4,9.8,10.3,10.8,11.4]},
+  {n:"Automotive",               v24:8.91,   v20:7.1,   v29:11.8,  c1:0.0463, c2:0.0474, t:[7.1,7.7,8.0,8.5,8.9,9.4,9.9,10.5,11.1,11.8]},
+  {n:"Insurance",                v24:6.92,   v20:5.5,   v29:9.2,   c1:0.0461, c2:0.0464, t:[5.5,6.0,6.1,6.5,6.9,7.3,7.8,8.2,8.7,9.2]},
+  {n:"Oil & Gas",                v24:5.96,   v20:4.6,   v29:6.2,   c1:0.0509, c2:0.0109, t:[4.6,5.6,7.1,6.1,6.0,5.9,5.9,6.0,6.1,6.2]},
+  {n:"Agricultural Products",    v24:5.57,   v20:5.4,   v29:7.0,   c1:0.0073, c2:0.0400, t:[5.4,5.4,5.5,5.6,5.6,5.8,6.0,6.3,6.7,7.0]},
+  {n:"Chemicals",                v24:5.44,   v20:3.9,   v29:7.2,   c1:0.0700, c2:0.0472, t:[3.9,5.0,5.5,5.2,5.4,5.7,6.1,6.4,6.8,7.2]},
+  {n:"Travel & Tourism",         v24:4.34,   v20:1.4,   v29:6.1,   c1:0.2618, c2:0.0529, t:[1.4,2.0,3.0,4.0,4.3,4.7,5.1,5.4,5.8,6.1]},
+  {n:"Technology, Media & Telecom", v24:4.25, v20:3.1,  v29:6.8,   c1:0.0639, c2:0.0803, t:[3.1,3.5,3.8,4.0,4.2,4.6,5.0,5.5,6.1,6.8]},
+  {n:"Mining",                   v24:3.11,   v20:2.1,   v29:3.8,   c1:0.0850, c2:0.0332, t:[2.1,3.6,4.0,3.2,3.1,3.2,3.3,3.5,3.6,3.8]},
+  {n:"Business & Consumer Svcs", v24:3.09,   v20:2.5,   v29:4.1,   c1:0.0472, c2:0.0492, t:[2.5,2.7,2.8,2.9,3.1,3.2,3.4,3.6,3.9,4.1]},
+  {n:"Env & Waste Management",   v24:2.63,   v20:2.2,   v29:3.5,   c1:0.0327, c2:0.0486, t:[2.2,2.3,2.4,2.5,2.6,2.8,2.9,3.1,3.3,3.5]},
+  {n:"Pharmaceuticals",          v24:1.44,   v20:1.2,   v29:1.8,   c1:0.0337, c2:0.0375, t:[1.2,1.3,1.3,1.4,1.4,1.5,1.6,1.7,1.7,1.8]},
+  {n:"Leisure & Arts",           v24:1.18,   v20:0.83,  v29:1.72,  c1:0.0738, c2:0.0625, t:[0.83,0.92,1.02,1.11,1.18,1.27,1.36,1.47,1.59,1.72]},
+  {n:"Medical Devices",          v24:0.61,   v20:0.56,  v29:0.78,  c1:0.0170, c2:0.0425, t:[0.56,0.60,0.57,0.58,0.61,0.63,0.67,0.70,0.74,0.78]},
+  {n:"Aerospace, Defense & Space",v24:0.42,  v20:0.33,  v29:0.50,  c1:0.0522, c2:0.0168, t:[0.33,0.35,0.37,0.39,0.42,0.46,0.49,0.50,0.50,0.50]}
+];
+
+const COLORS = [
+  '#c9a84c','#2a7d6b','#b85c38','#3d5a73','#7b6fa0',
+  '#4a9d8e','#c0704a','#5b82a8','#d4b86a','#3d8f6f',
+  '#a06050','#6080a0','#b0906a','#4a7060','#904040',
+  '#507090','#c0a050','#608060','#805050','#506080',
+  '#a08040','#608060','#907070','#708090'
+];
+
+const YEARS = [2020,2021,2022,2023,2024,2025,2026,2027,2028,2029];
+
+function fmt(v) {
+  if (v >= 100) return '$' + v.toFixed(0) + 'B';
+  if (v >= 10)  return '$' + v.toFixed(1) + 'B';
+  if (v >= 1)   return '$' + v.toFixed(2) + 'B';
+  return '$' + (v * 1000).toFixed(0) + 'M';
+}
+
+/* ═══ CHART DEFAULTS ═══ */
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#7a7464';
+
+/* ═══ BUBBLE CHART ═══ */
+function makeBubble() {
+  // exclude banking for scale
+  const ex = DATA.filter(d => d.n !== 'Banking & Payments');
+  const datasets = ex.map((d,i) => ({
+    label: d.n,
+    data: [{ x: d.c1*100, y: d.c2*100, r: Math.sqrt(d.v24) * 3.5 }],
+    backgroundColor: COLORS[i] + '99',
+    borderColor: COLORS[i],
+    borderWidth: 1.5,
+  }));
+
+  new Chart(document.getElementById('bubbleChart'), {
+    type: 'bubble',
+    data: { datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 1200, easing: 'easeOutQuart' },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label(ctx) {
+              return [`${ctx.dataset.label}`, `Market: ${fmt(DATA.find(d=>d.n===ctx.dataset.label)?.v24||0)}`, `Hist CAGR: ${ctx.raw.x.toFixed(1)}%`, `Fwd CAGR: ${ctx.raw.y.toFixed(1)}%`];
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'CAGR 2020–24 (%)', color:'#9a8f7f' },
+          grid: { color: 'rgba(212,206,191,0.3)' },
+          ticks: { callback: v => v+'%' }
+        },
+        y: {
+          title: { display: true, text: 'CAGR 2025–29 (%)', color:'#9a8f7f' },
+          grid: { color: 'rgba(212,206,191,0.3)' },
+          ticks: { callback: v => v+'%' }
+        }
+      }
+    }
+  });
+}
+
+/* ═══ DONUT CHART ═══ */
+function makeDonut() {
+  const ex = DATA.filter(d => d.n !== 'Banking & Payments').sort((a,b)=>b.v24-a.v24).slice(0,10);
+  const other = DATA.filter(d=>d.n!=='Banking & Payments').slice(10).reduce((s,d)=>s+d.v24,0);
+  const labels = [...ex.map(d=>d.n), 'Other Industries'];
+  const vals = [...ex.map(d=>d.v24), other];
+  const colors = [...ex.map((_,i)=>COLORS[i+1]), '#c0b090'];
+
+  new Chart(document.getElementById('donutChart'), {
+    type: 'doughnut',
+    data: { labels, datasets:[{ data: vals, backgroundColor: colors, borderWidth: 2, borderColor: '#faf7f0', hoverOffset: 8 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '60%',
+      animation: { duration: 1400, easing: 'easeOutBounce' },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { font: { size:10 }, padding: 10, boxWidth: 10, color:'#7a7464',
+            filter(item) { return item.index < 8; }
+          }
+        },
+        tooltip: { callbacks: { label(ctx) { return `${ctx.label}: ${fmt(ctx.raw)} (${((ctx.raw/vals.reduce((a,b)=>a+b,0))*100).toFixed(1)}%)`; } } }
+      }
+    }
+  });
+}
+
+/* ═══ LINE CHART ═══ */
+const lineGroups = {
+  growth: ['Technology, Media & Telecom','Leisure & Arts','Automotive','Industrial Goods','Env & Waste Management'],
+  stable: ['Government & Non-profit','Retail','Construction','Healthcare','Power & Utilities'],
+  recovery: ['Travel & Tourism','Mining','Chemicals','Oil & Gas','Transport & Logistics']
+};
+
+let lineChart = null;
+
+function makeLineData(key) {
+  const names = lineGroups[key];
+  return names.map((n,i) => {
+    const d = DATA.find(x=>x.n===n);
+    const base = d.t[0];
+    const indexed = d.t.map(v => (v/base)*100);
+    return {
+      label: n,
+      data: indexed,
+      borderColor: COLORS[i],
+      backgroundColor: COLORS[i]+'22',
+      borderWidth: 2,
+      pointRadius: 3,
+      pointHoverRadius: 6,
+      tension: 0.35,
+      fill: false,
+      segment: {
+        borderDash: (ctx) => ctx.p0DataIndex >= 4 ? [5,3] : undefined,
+        borderColor: (ctx) => ctx.p0DataIndex >= 4 ? COLORS[i]+'99' : COLORS[i]
+      }
+    };
+  });
+}
+
+function switchLine(key) {
+  document.querySelectorAll('#lineChart').forEach(()=>{});
+  document.querySelectorAll('.tab').forEach(t => {
+    if(t.closest('#lineChart') === null) {
+      // find all tab groups
+    }
+  });
+  const tabs = document.getElementById('lineChart').closest('.chart-card').querySelectorAll('.tab');
+  tabs.forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+
+  if(lineChart) {
+    lineChart.data.datasets = makeLineData(key);
+    lineChart.update('active');
+  }
+}
+
+function initLine() {
+  const ctx = document.getElementById('lineChart').getContext('2d');
+  lineChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: YEARS, datasets: makeLineData('growth') },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 800 },
+      interaction: { mode:'index', intersect: false },
+      plugins: {
+        legend: { position:'bottom', labels:{ font:{size:10}, padding:12, boxWidth:12, color:'#9aa4b2' } },
+        tooltip: {
+          backgroundColor:'rgba(20,25,35,0.95)', borderColor:'rgba(255,255,255,0.1)', borderWidth:1,
+          callbacks: {
+            label(ctx) { return ` ${ctx.dataset.label}: ${ctx.raw.toFixed(0)} (index)`; }
+          }
+        },
+        annotation: {
+          annotations: {
+            forecastLine: {
+              type:'line', x:'2025',
+              borderColor:'rgba(201,168,76,0.3)', borderWidth:1, borderDash:[4,4],
+              label:{ display:true, content:'Forecast →', color:'#c9a84c', font:{size:9} }
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'#5a6880'} },
+        y: {
+          grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'#5a6880', callback:v=>v+''},
+          title:{display:true, text:'Index (2020 = 100)', color:'#5a6880'}
+        }
+      }
+    }
+  });
+
+  // Draw forecast zone manually
+  const originalDraw = lineChart.draw.bind(lineChart);
+  lineChart.draw = function() {
+    originalDraw();
+    const chart = lineChart;
+    const ctx2 = chart.ctx;
+    const xScale = chart.scales.x;
+    const yScale = chart.scales.y;
+    const x = xScale.getPixelForValue(4.5); // between 2024 and 2025
+    const top = yScale.top, bottom = yScale.bottom;
+    ctx2.save();
+    ctx2.fillStyle = 'rgba(201,168,76,0.04)';
+    ctx2.fillRect(x, top, xScale.right - x, bottom - top);
+    ctx2.restore();
+  };
+}
+
+/* ═══ SCATTER / MATRIX CHART ═══ */
+function makeScatter() {
+  const ex = DATA.filter(d=>d.n!=='Banking & Payments' && d.n!=='Travel & Tourism');
+  const datasets = ex.map((d,i) => ({
+    label: d.n,
+    data:[{ x: d.c1*100, y: d.c2*100 }],
+    backgroundColor: COLORS[DATA.indexOf(d)] + 'cc',
+    borderColor: COLORS[DATA.indexOf(d)],
+    borderWidth: 1.5,
+    pointRadius: Math.max(5, Math.sqrt(d.v24) * 2),
+    pointHoverRadius: Math.max(7, Math.sqrt(d.v24) * 2.5),
+  }));
+
+  new Chart(document.getElementById('scatterChart'), {
+    type: 'scatter',
+    data: { datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 1000 },
+      plugins: {
+        legend:{ display:false },
+        tooltip:{
+          callbacks:{
+            label(ctx){
+              const d = DATA.find(x=>x.n===ctx.dataset.label);
+              return [`${ctx.dataset.label}`,`Hist: ${ctx.raw.x.toFixed(1)}% → Fwd: ${ctx.raw.y.toFixed(1)}%`,`Size: ${fmt(d?.v24||0)}`];
+            }
+          }
+        }
+      },
+      scales: {
+        x:{
+          title:{display:true,text:'Historical CAGR 2020–24 (%)',color:'#9a8f7f'},
+          grid:{color:'rgba(212,206,191,0.25)'},
+          ticks:{callback:v=>v+'%'}
+        },
+        y:{
+          title:{display:true,text:'Forward CAGR 2025–29 (%)',color:'#9a8f7f'},
+          grid:{color:'rgba(212,206,191,0.25)'},
+          ticks:{callback:v=>v+'%'}
+        }
+      }
+    },
+    plugins:[{
+      id:'quadrants',
+      beforeDraw(chart){
+        const {ctx, scales:{x,y}} = chart;
+        const mx = x.getPixelForValue(4), my = y.getPixelForValue(4);
+        ctx.save();
+        // Q labels
+        const labels = [
+          {tx: (mx+x.right)/2,  ty: y.top+20,   text:'RISING STARS', color:'rgba(42,125,107,0.7)'},
+          {tx: (x.left+mx)/2,   ty: y.top+20,   text:'SLOW THEN FAST', color:'rgba(201,168,76,0.7)'},
+          {tx: (mx+x.right)/2,  ty: y.bottom-16, text:'FAST THEN SLOW', color:'rgba(184,92,56,0.7)'},
+          {tx: (x.left+mx)/2,   ty: y.bottom-16, text:'STEADY EDDIES', color:'rgba(122,116,100,0.7)'},
+        ];
+        ctx.font = 'bold 9px "JetBrains Mono"';
+        ctx.textAlign = 'center';
+        labels.forEach(l=>{ ctx.fillStyle=l.color; ctx.fillText(l.text,l.tx,l.ty); });
+        // quadrant lines
+        ctx.setLineDash([4,4]);
+        ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(mx,y.top); ctx.lineTo(mx,y.bottom); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x.left,my); ctx.lineTo(x.right,my); ctx.stroke();
+        ctx.restore();
+      }
+    }]
+  });
+}
+
+/* ═══ DELTA CHART ═══ */
+function makeDelta() {
+  const sorted = [...DATA].filter(d=>d.n!=='Travel & Tourism').sort((a,b)=>(b.c2-b.c1)-(a.c2-a.c1)).slice(0,12);
+  const deltas = sorted.map(d => ((d.c2 - d.c1)*100));
+  const colors = deltas.map(v => v>0 ? 'rgba(42,125,107,0.85)' : 'rgba(184,92,56,0.85)');
+
+  new Chart(document.getElementById('deltaChart'), {
+    type:'bar',
+    data:{
+      labels: sorted.map(d=>d.n.length>18?d.n.slice(0,17)+'…':d.n),
+      datasets:[{
+        data: deltas,
+        backgroundColor: colors,
+        borderColor: colors,
+        borderWidth: 1,
+        borderRadius: 3,
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      indexAxis:'y',
+      animation:{duration:900},
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label(ctx){return ` ${ctx.raw>0?'+':''}${ctx.raw.toFixed(1)}pp shift in CAGR`;}}},
+      },
+      scales:{
+        x:{grid:{color:'rgba(212,206,191,0.3)'},ticks:{callback:v=>(v>0?'+':'')+v+'pp',color:'#7a7464'}},
+        y:{grid:{display:false},ticks:{font:{size:9},color:'#7a7464'}}
+      }
+    }
+  });
+}
+
+/* ═══ AREA CHART ═══ */
+let areaChart = null;
+
+function populateSelect() {
+  const sel = document.getElementById('industrySelect');
+  DATA.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.n; opt.textContent = d.n;
+    sel.appendChild(opt);
+  });
+}
+
+function updateAreaChart() {
+  const name = document.getElementById('industrySelect').value;
+  const d = DATA.find(x=>x.n===name);
+  if(!d) return;
+
+  const color = COLORS[DATA.indexOf(d)];
+  const histData = d.t.slice(0,5);
+  const fcastData = d.t.slice(4);
+  const fcastLabels = YEARS.slice(4);
+
+  const insightsEl = document.getElementById('areaInsights');
+  const growth = ((d.v29/d.v24)-1)*100;
+  const cards = [
+    { label:'2020 Value', val: fmt(d.v20) },
+    { label:'2024 Value', val: fmt(d.v24) },
+    { label:'2029 Forecast', val: fmt(d.v29) },
+    { label:'Fwd 5-yr Growth', val: `${growth>0?'+':''}${growth.toFixed(0)}%` },
+  ];
+  insightsEl.innerHTML = cards.map(c=>`
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:16px;text-align:center;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:#5a6880;text-transform:uppercase;margin-bottom:8px">${c.label}</div>
+      <div style="font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:${color}">${c.val}</div>
+    </div>`).join('');
+
+  if(areaChart) {
+    areaChart.destroy();
+  }
+
+  const ctx = document.getElementById('areaChart').getContext('2d');
+  const grad1 = ctx.createLinearGradient(0,0,0,320);
+  grad1.addColorStop(0, color+'60');
+  grad1.addColorStop(1, color+'05');
+
+  const grad2 = ctx.createLinearGradient(0,0,0,320);
+  grad2.addColorStop(0, color+'30');
+  grad2.addColorStop(1, color+'00');
+
+  areaChart = new Chart(ctx, {
+    type:'line',
+    data:{
+      labels: YEARS,
+      datasets:[
+        {
+          label:'Historical',
+          data:[...histData, null, null, null, null, null],
+          borderColor: color,
+          backgroundColor: grad1,
+          borderWidth: 2.5,
+          pointRadius: 4, pointHoverRadius: 7,
+          fill:true, tension:0.35
+        },
+        {
+          label:'Forecast',
+          data:[null,null,null,null,...fcastData],
+          borderColor: color+'99',
+          backgroundColor: grad2,
+          borderWidth: 2,
+          borderDash:[6,4],
+          pointRadius: 4, pointHoverRadius: 7,
+          pointStyle:'triangle',
+          fill:true, tension:0.35
+        }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      animation:{duration:700, easing:'easeOutQuart'},
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:true, position:'bottom', labels:{color:'#9aa4b2', font:{size:10}, boxWidth:12}},
+        tooltip:{
+          backgroundColor:'rgba(15,20,30,0.95)', borderColor:'rgba(255,255,255,0.1)', borderWidth:1,
+          callbacks:{
+            label(ctx){ return ` ${ctx.dataset.label}: ${fmt(ctx.raw||0)}`; }
+          }
+        }
+      },
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#5a6880'}},
+        y:{
+          grid:{color:'rgba(255,255,255,0.06)'},
+          ticks:{color:'#5a6880', callback:v=>fmt(v)},
+          title:{display:true, text:'USD Billions', color:'#5a6880'}
+        }
+      }
+    }
+  });
+}
+
+/* ═══ TABLE ═══ */
+let tblSort = 'val', tblDir = -1;
+
+function tableSort(key) {
+  if(tblSort===key) tblDir*=-1; else {tblSort=key; tblDir=-1;}
+  ['Val','C1','C2','Name'].forEach(k => {
+    const el = document.getElementById('sortBtn'+k);
+    if(el) el.classList.toggle('active', k.toLowerCase()===key);
+  });
+  renderTable();
+}
+
+function renderTable() {
+  const q = document.getElementById('searchBox')?.value?.toLowerCase()||'';
+  let rows = DATA.filter(d => d.n.toLowerCase().includes(q));
+
+  rows.sort((a,b)=>{
+    let va,vb;
+    if(tblSort==='val'){va=a.v24;vb=b.v24;}
+    else if(tblSort==='c1'){va=a.c1;vb=b.c1;}
+    else if(tblSort==='c2'){va=a.c2;vb=b.c2;}
+    else{va=a.n;vb=b.n;}
+    return va<vb?tblDir:-tblDir;
+  });
+
+  const body = document.getElementById('tableBody');
+  body.innerHTML = rows.map((d,i)=>{
+    const color = COLORS[DATA.indexOf(d)];
+    const delta = d.c2-d.c1;
+    const pillCls = d.c2>=0.06?'pill-high':d.c2>=0.04?'pill-up':d.c2>=0.02?'pill-neutral':'pill-dn';
+    const outArrow = delta>0.01?'▲ Accel':delta<-0.01?'▼ Decel':'→ Stable';
+    const outCls = delta>0.01?'pill-up':delta<-0.01?'pill-dn':'pill-neutral';
+    const barW = Math.min(100, (d.v24/35)*100);
+    return `<tr>
+      <td class="rank-num">${i+1}</td>
+      <td><span class="ind-color-bar" style="background:${color}"></span>${d.n}</td>
+      <td style="text-align:right;font-family:'JetBrains Mono',monospace">${fmt(d.v20)}</td>
+      <td style="text-align:right;font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--charcoal)">${fmt(d.v24)}</td>
+      <td style="text-align:right;font-family:'JetBrains Mono',monospace">${fmt(d.v29)}</td>
+      <td style="text-align:right"><span class="pill ${d.c1>=0.08?'pill-high':d.c1>=0.04?'pill-up':d.c1>=0.02?'pill-neutral':'pill-dn'}">${(d.c1*100).toFixed(1)}%</span></td>
+      <td style="text-align:right"><span class="pill ${pillCls}">${(d.c2*100).toFixed(1)}%</span></td>
+      <td>
+        <div class="mini-bar-wrap">
+          <div class="mini-bar" style="width:${barW.toFixed(0)}%;background:${color};min-width:4px;max-width:80px"></div>
+        </div>
+      </td>
+      <td style="text-align:center"><span class="pill ${outCls}" style="font-size:9px">${outArrow}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+/* ═══ REVEAL ON SCROLL ═══ */
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e => {
+    if(e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ═══ INIT ═══ */
+window.addEventListener('DOMContentLoaded', ()=>{
+  makeBubble();
+  makeDonut();
+  initLine();
+  makeScatter();
+  makeDelta();
+  populateSelect();
+  updateAreaChart();
+  renderTable();
+});
+</script>
+</body>
+</html>
